@@ -25,13 +25,27 @@ namespace Strata
     class Camera : Camera2D
     {
         private readonly Viewport _viewport;
+        private readonly Vector2 _origin;
+
         private Rectangle? _limits;
 
-        public Camera(GraphicsDevice graphicsDevice) : base(graphicsDevice) { }
+
+        public Camera(GraphicsDevice graphicsDevice) : base(graphicsDevice)
+        {
+            _viewport = graphicsDevice.Viewport;
+            _origin = new Vector2(_viewport.Width / 2.0f, _viewport.Height / 2.0f);
+        }
 
         /// <summary>
         /// This property will return a new vector containing the origin of the camera.
         /// </summary>
+        public new Vector2 Origin
+        {
+            get
+            {
+                return _origin;
+            }
+        }
 
         /// <summary>
         /// This property will return or set the position of the camera.
@@ -61,8 +75,8 @@ namespace Strata
             set
             {
                 base.Zoom = value;
-                ValidatePosition();
                 ValidateZoom();
+                ValidatePosition();
             }
         }
 
@@ -75,7 +89,7 @@ namespace Strata
             {
                 _limits = value;
                 //If we set our limits we need to make sure that we initially follow the rules of the limiter.
-                //ValidateZoom();
+                ValidateZoom();
                 ValidatePosition();
             }
         }
@@ -132,11 +146,22 @@ namespace Strata
                 Vector2 limitWorldUpper = new Vector2(_limits.Value.Right, _limits.Value.Bottom);
                 //Next, calculate the position relative to the world
                 Vector2 positionRelative = Position - cameraRelative;
-                base.Position = Vector2.Clamp(cameraRelative, limitWorldLower, limitWorldUpper) + positionRelative;
+                base.Position = Vector2.Clamp(cameraRelative, limitWorldLower, limitWorldUpper - cameraSize) + positionRelative;
 
                 //Done!
 
             }
+        }
+
+        //Public Methods
+
+        /// <summary>
+        /// Helper function that resets the camera.
+        /// </summary>
+        public void ResetCamera()
+        {
+            Zoom = 1f;
+            Position = Vector2.Zero;
         }
     }
 }
