@@ -25,7 +25,6 @@ namespace Strata
     class Camera : Camera2D
     {
         private readonly Viewport _viewport;
-        private readonly Vector2 _origin;
 
         private Rectangle? _limits;
 
@@ -33,18 +32,6 @@ namespace Strata
         public Camera(GraphicsDevice graphicsDevice) : base(graphicsDevice)
         {
             _viewport = graphicsDevice.Viewport;
-            _origin = new Vector2(_viewport.Width / 2.0f, _viewport.Height / 2.0f);
-        }
-
-        /// <summary>
-        /// This property will return a new vector containing the origin of the camera.
-        /// </summary>
-        public new Vector2 Origin
-        {
-            get
-            {
-                return _origin;
-            }
         }
 
         /// <summary>
