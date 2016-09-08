@@ -5,7 +5,7 @@ namespace Strata.Screen_Entities
 {
     public abstract class GameObject
     {
-        //This is a comment.
+        //This 
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(SpriteBatch spriteBatch);
     }
