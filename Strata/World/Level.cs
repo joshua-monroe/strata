@@ -1,4 +1,18 @@
-﻿using System;
+﻿/*
+
+Last Editted by : Kiel Regusters
+Date            : 09/25/2016
+
+Additions: 
+-Main Level class
+
+Notes:
+
+//TODO: How to use
+
+*/
+
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,9 +28,9 @@ namespace Strata.World
 {
     class Level
     {
-        //Constant Fields
-        public const float GRAV_SCALE = 1.0f; //const for now
-        public const float MAX_VEL_Y = 750.0f; //const for now
+        // Constant Fields
+        public const float GRAV_SCALE = 1.0f; // const for now
+        public const float MAX_VEL_Y = 750.0f; // const for now
         private const string TILESET_PATH = "Maps\\Tilesets\\";
 
         #region Fields

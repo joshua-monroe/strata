@@ -1,11 +1,10 @@
 ﻿/*
 
 Last Editted by : Kiel Regusters
-Date            : 09/08/2016
+Date            : 09/25/2016
 
 Additions: 
--Main implementation of the class. Extended the MonoGame.Extended library's already powerful Camera2D class to support limiting rectangles.
--Explanatory comments written
+-Linear interpolation
 
 Notes:
 
