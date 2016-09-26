@@ -7,12 +7,14 @@ namespace Strata
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class GameManager : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        public static bool debugFlag = false;
+        public static Texture2D debugRect;
 
-        public Game1()
+        public GameManager()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -27,6 +29,14 @@ namespace Strata
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            debugRect = new Texture2D(GraphicsDevice, 32, 32);
+
+            Color[] data = new Color[80 * 30];
+
+            for (int i = 0; i < data.Length; ++i)
+                data[i] = Color.White;
+
+            debugRect.SetData(data);
 
             base.Initialize();
         }

@@ -51,6 +51,34 @@ namespace Strata
         }
 
         /// <summary>
+        /// LookAt integrated with linear interpolation.
+        /// </summary>
+        /// <param name="target">What to look at</param>
+        /// <param name="t">The t parameter is set within a range of 0 to 1, 0 being your from value, 1 being your to value.</param>
+        public void LerpLookAt(Vector2 target, float t)
+        {
+            Vector2 interpTarget = CenterPosition;
+
+            interpTarget.X = MathHelper.Lerp(CenterPosition.X, target.X, t);
+            interpTarget.Y = MathHelper.Lerp(CenterPosition.Y, target.Y, t);
+            CenterPosition = interpTarget;
+        }
+
+
+        public Vector2 CenterPosition
+        {
+            get
+            {
+                return Position + Origin;
+            }
+            set
+            {
+                Position = value - Origin;
+            }
+        }
+
+
+        /// <summary>
         /// This property will return or set the Zoom of the camera.
         /// </summary>
         public new float Zoom
@@ -61,7 +89,7 @@ namespace Strata
             }
             set
             {
-                base.Zoom = value;
+                base.Zoom = MathHelper.Max(value, 0.01f);
                 ValidateZoom();
                 ValidatePosition();
             }
@@ -91,14 +119,14 @@ namespace Strata
             //Only validate the zoom if our limits have a value, otherwise the camera can freely zoom
             if (_limits.HasValue)
             {
-                //Validating the camera's zoom is easier than checking the position
-                //First we know that the camera isn't zoomed in at all with a value of 1.0f.
-                //Knowing that, the area that the camera can see corresponds exactly to the games Viewport.
-                //If we zoom in, we see less of the world, if we zoom out we see more.
-                //This implies that CameraViewport = Viewport / Zoom
-                //So CameraViewport <= LimitRectangle
-                //Combining these equations, we get an easy to program expression:
-                //Zoom >= ViewportSize / LimitRectangle
+                // Validating the camera's zoom is easier than checking the position
+                // First we know that the camera isn't zoomed in at all with a value of 1.0f.
+                // Knowing that, the area that the camera can see corresponds exactly to the games Viewport.
+                // If we zoom in, we see less of the world, if we zoom out we see more.
+                // This implies that CameraViewport = Viewport / Zoom
+                // So CameraViewport <= LimitRectangle
+                // Combining these equations, we get an easy to program expression:
+                // Zoom >= ViewportSize / LimitRectangle
 
                 float minimumZoom_X = (float)_viewport.Width / _limits.Value.Width;
                 float minimumZoom_Y = (float)_viewport.Height / _limits.Value.Height;
@@ -110,7 +138,7 @@ namespace Strata
         /// <summary>
         /// This function will clamp the position within the bounds set by another class (probably the level class)
         /// </summary>
-        private void ValidatePosition()
+        public void ValidatePosition()
         {
             //Only validate the position if our limits have a value, otherwise the camera can freely roam
             if (_limits.HasValue)
