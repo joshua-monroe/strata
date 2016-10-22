@@ -6,40 +6,20 @@ namespace Strata
 {
     abstract class Entity : ICollidable
     {
-        protected int _width;
-        protected int _height;
         protected Vector2 _velocity;
         protected Vector2 _position;
         protected float _friction = 10f;
         protected Rectangle _bounds;
 
-        public int Width
-        {
-            get
-            {
-                return _width;
-            }
-            set
-            {
-                _width = value;
-            }
-        }
-        public int Height
-        {
-            get
-            {
-                return _height;
-            }
-            set
-            {
-                _height = value;
-            }
-        }
+        public int Width { get; set; }
+        public int Height { get; set; }
+
         public abstract Vector2 Position
         {
             get;
             set;
         }
+
         public Vector2 ZeroPosition
         {
             get
@@ -47,6 +27,7 @@ namespace Strata
                 return Position - Origin;
             }
         }
+
         public Vector2 Velocity
         {
             get
@@ -58,6 +39,7 @@ namespace Strata
                 _velocity = value;
             }
         }
+
         public Vector2 Origin
         {
             get
@@ -65,6 +47,7 @@ namespace Strata
                 return new Vector2(Width / 2, Height / 2);
             }
         }
+
         public Vector2 TileCoordinates
         {
             get
@@ -74,6 +57,7 @@ namespace Strata
                 return new Vector2((float)Math.Floor(x), (float)Math.Floor(y));
             }
         }
+
         public Rectangle Bounds
         {
             get

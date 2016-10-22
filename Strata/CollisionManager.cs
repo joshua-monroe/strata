@@ -1,18 +1,4 @@
-﻿/*
-
-Last Editted by : Kiel Regusters
-Date            : 09/25/2016
-
-Additions: 
--Collision
-
-Notes:
-
-//TODO: How to use
-
-*/
-
-using Strata.World;
+﻿using Strata.World;
 using Strata.Interfaces;
 using System.Collections.Generic;
 

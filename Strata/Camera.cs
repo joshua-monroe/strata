@@ -16,17 +16,14 @@ namespace Strata
     /// </summary>
     public class Camera : Camera2D
     {
-        private readonly Viewport _viewport;
+        private readonly Viewport viewport;
 
-        private Rectangle? _limits;
+        private Rectangle? limits;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Camera"/> class
-        /// </summary>
-        /// <param name="graphicsDevice">The graphics device</param>
+
         public Camera(GraphicsDevice graphicsDevice) : base(graphicsDevice)
         {
-            _viewport = graphicsDevice.Viewport;
+            this.viewport = graphicsDevice.Viewport;
         }
 
         /// <summary>
@@ -49,7 +46,7 @@ namespace Strata
         /// LookAt integrated with linear interpolation.
         /// </summary>
         /// <param name="target">What to look at</param>
-        /// <param name="t">The t parameter is set within a range of 0 to 1, 0 being your from value, 1 being your to value.</param>
+        /// <param name="t">The t parameter is set within a range of 0 to 1</param>
         public void LerpLookAt(Vector2 target, float t)
         {
             Vector2 interpTarget = CenterPosition;
@@ -97,7 +94,7 @@ namespace Strata
         {
             set
             {
-                _limits = value;
+                this.limits = value;
                 //If we set our limits we need to make sure that we initially follow the rules of the limiter.
                 ValidateZoom();
                 ValidatePosition();
@@ -112,7 +109,7 @@ namespace Strata
         private void ValidateZoom()
         {
             //Only validate the zoom if our limits have a value, otherwise the camera can freely zoom
-            if (_limits.HasValue)
+            if (this.limits.HasValue)
             {
                 // Validating the camera's zoom is easier than checking the position
                 // First we know that the camera isn't zoomed in at all with a value of 1.0f.
@@ -123,10 +120,10 @@ namespace Strata
                 // Combining these equations, we get an easy to program expression:
                 // Zoom >= ViewportSize / LimitRectangle
 
-                float minimumZoom_X = (float)_viewport.Width / _limits.Value.Width;
-                float minimumZoom_Y = (float)_viewport.Height / _limits.Value.Height;
+                float minimumZoomX = (float)this.viewport.Width / this.limits.Value.Width;
+                float minimumZoomY = (float)this.viewport.Height / this.limits.Value.Height;
 
-                base.Zoom = MathHelper.Max(Zoom, MathHelper.Max(minimumZoom_X, minimumZoom_Y));
+                base.Zoom = MathHelper.Max(Zoom, MathHelper.Max(minimumZoomX, minimumZoomY));
             }
         }
 
@@ -136,7 +133,7 @@ namespace Strata
         public void ValidatePosition()
         {
             //Only validate the position if our limits have a value, otherwise the camera can freely roam
-            if (_limits.HasValue)
+            if (this.limits.HasValue)
             {
                 //Validating the camera's position is a little hard.
                 //First, we need to know where the top left corner of the camera. (No matter how zoomed it is.)
@@ -150,10 +147,10 @@ namespace Strata
                 //Get the top left corner of the camera relative to worldspace, luckily our parent has our inverse matrix for us.
                 Vector2 cameraRelative = Vector2.Transform(Vector2.Zero, GetInverseViewMatrix());
                 //Next, get the camera size. We must take into account the zoom of the camera.
-                Vector2 cameraSize = new Vector2(_viewport.Width, _viewport.Height) / Zoom;
+                Vector2 cameraSize = new Vector2(this.viewport.Width, this.viewport.Height) / Zoom;
                 //Next, we get the limits of the camera in vector form.
-                Vector2 limitWorldLower = new Vector2(_limits.Value.Left, _limits.Value.Top);
-                Vector2 limitWorldUpper = new Vector2(_limits.Value.Right, _limits.Value.Bottom);
+                Vector2 limitWorldLower = new Vector2(this.limits.Value.Left, this.limits.Value.Top);
+                Vector2 limitWorldUpper = new Vector2(this.limits.Value.Right, this.limits.Value.Bottom);
                 //Next, calculate the position relative to the world
                 Vector2 positionRelative = Position - cameraRelative;
                 base.Position = Vector2.Clamp(cameraRelative, limitWorldLower, limitWorldUpper - cameraSize) + positionRelative;
@@ -162,6 +159,8 @@ namespace Strata
 
             }
         }
+
+        //Public Methods
 
         /// <summary>
         /// Helper function that resets the camera.
