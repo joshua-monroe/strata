@@ -16,8 +16,14 @@ namespace Strata
     /// </summary>
     public class Camera : Camera2D
     {
+        /// <summary>
+        /// The view port
+        /// </summary>
         private readonly Viewport _viewport;
 
+        /// <summary>
+        /// The limits
+        /// </summary>
         private Rectangle? _limits;
 
         /// <summary>
@@ -98,6 +104,7 @@ namespace Strata
             set
             {
                 _limits = value;
+
                 //If we set our limits we need to make sure that we initially follow the rules of the limiter.
                 ValidateZoom();
                 ValidatePosition();
