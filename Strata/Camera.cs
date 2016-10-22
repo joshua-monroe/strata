@@ -1,33 +1,29 @@
-﻿/*
-
-Last Editted by : Kiel Regusters
-Date            : 09/25/2016
-
-Additions: 
--Linear interpolation
-
-Notes:
-
-This should be our main Camera class for use throughout the game. Avoid using the Extended Camera2D class over this one.
-
-*/
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
+﻿//------------------------------------------------------------------------------------------------------------------------------------------
+// <copyright file="Camera.cs" company="Strata">
+//     Copyright (c) Strata.  All rights reserved.
+// </copyright>
+//------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace Strata
 {
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using MonoGame.Extended;
+
     /// <summary>
     /// Extends the MonoGame.Extended camera class to support a limiting rectangle the camera can move inside
     /// This will be useful for keeping the camera within the bounds of the level and the player never sees "the void"
     /// </summary>
-    class Camera : Camera2D
+    public class Camera : Camera2D
     {
         private readonly Viewport _viewport;
 
         private Rectangle? _limits;
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Camera"/> class
+        /// </summary>
+        /// <param name="graphicsDevice">The graphics device</param>
         public Camera(GraphicsDevice graphicsDevice) : base(graphicsDevice)
         {
             _viewport = graphicsDevice.Viewport;
@@ -166,8 +162,6 @@ namespace Strata
 
             }
         }
-
-        //Public Methods
 
         /// <summary>
         /// Helper function that resets the camera.
