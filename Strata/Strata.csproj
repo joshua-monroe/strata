@@ -41,6 +41,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="CollisionManager.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="Example Code\GameManagerExample.cs" />
     <Compile Include="Example Code\Player.cs" />
     <Compile Include="Interfaces\ICollidable.cs" />
     <Compile Include="Screen Entities\Character.cs" />
